@@ -8,6 +8,7 @@ engine = create_engine("sqlite:///./memory.db", echo=True)
 
 session = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 
+
 def get_db():
     ses = Session(engine)
     return ses

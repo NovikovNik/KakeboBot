@@ -6,12 +6,12 @@ from user import *
 import telebot
 from telebot import types
 
-if debug:=False == True:
+if debug:=True == True:
     Base.metadata.drop_all(engine) ##Убрать позже
 Base.metadata.create_all(engine)
 database = get_db()
 
-token = ""
+token = "5265113808:AAHEWiG5fyGQQfMxLlAmXFXd44zRUQx7ojw"
 bot = telebot.TeleBot(token, parse_mode=None)
 
 hideBoard = types.ReplyKeyboardRemove()
@@ -35,10 +35,19 @@ def initialising(message):
 def base_bot_menu(chat_id):
     bot.send_message(chat_id, text="Выбери действие:", reply_markup=bot_repo.get_start_menu())
 
-@bot.message_handler(func=lambda message: message.text == "Начать настройку")
-def settings(message):
-    chat = message.chat.id
-    bot.send_message(chat_id=chat, text="Приступим", reply_markup=hideBoard)
+# @bot.message_handler(func=lambda message: message.text == "Начать настройку")
+# def settings(message):
+#     chat = message.chat.id
+#     bot.send_message(chat_id=chat, text="Приступим", reply_markup=hideBoard)
+    
+@bot.callback_query_handler(func=lambda call: True)
+def callback_query(call):
+    chat = call.message.chat.id
+    if call.data == "cb_settings":
+        # bot.answer_callback_query(call.id, "Приступим")
+        bot.send_message(chat_id=chat, text="Приступим..", reply_markup=hideBoard)
+    elif call.data == "cb_info":
+        bot.send_message(chat_id=chat, text="В разработке..", reply_markup=hideBoard)
     
 
 bot.infinity_polling()

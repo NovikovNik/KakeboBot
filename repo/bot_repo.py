@@ -1,11 +1,9 @@
 from telebot import types
 
 def get_start_menu():
-    markup = types.ReplyKeyboardMarkup(row_width=2)
-    itembtn1 = types.KeyboardButton('Начать настройку')
-    itembtn2 = types.KeyboardButton('Удалить свою информацию')
-    itembtn3 = types.KeyboardButton('Информация')
-    markup.add(itembtn1, itembtn2, itembtn3)
+    markup = types.InlineKeyboardMarkup()
+    markup.add(types.InlineKeyboardButton("Начать настройку", callback_data="cb_settings"),
+                               types.InlineKeyboardButton("Информация", callback_data="cb_info"))
     return markup
 
 def get_settings_menu():
